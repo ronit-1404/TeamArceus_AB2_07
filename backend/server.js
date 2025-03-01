@@ -1,46 +1,36 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-const rateLimit = require('express-rate-limit');
-const authRoutes = require('./src/routes/authRoutes');
-const donorRoutes = require('./src/routes/donorRoutes');
-const bloodRequestRoutes = require('./src/routes/bloodRequestRoutes');
-const sosRoutes = require('./src/routes/sosRoutes');
-const notificationRoutes = require('./src/routes/notificationRoutes');
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const connectDB = require("./config/db.js");
+const userRoutes = require("./routes/userRoutes.js");
+const donorRoutes = require("./routes/donorRoutes.js");
+const bloodRequestRoutes = require("./routes/bloodRequestRoutes.js");
+const donationRoutes = require("./routes/donationRoutes.js");
+const sosRoutes = require("./routes/sosRoutes.js");
+const bloodBankRoutes = require("./routes/bloodBankRoutes.js");
+const notificationRoutes = require("./routes/notificationRoutes.js");
+const reviewRoutes = require("./routes/reviewRoutes.js");
+const chatRoutes = require("./routes/chatRoutes.js");
 
+dotenv.config();
+connectDB();
 const app = express();
 
-// Security & Middleware
-app.use(helmet());
-app.use(cors({ origin: '*', credentials: true }));
-app.use(morgan('dev'));
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-
-// Rate Limiting
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
-});
-app.use(limiter);
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/donors', donorRoutes);
-app.use('/api/blood-requests', bloodRequestRoutes);
-app.use('/api/sos', sosRoutes);
-app.use('/api/notifications', notificationRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/donors", donorRoutes);
+app.use("/api/blood-requests", bloodRequestRoutes);
+app.use("/api/donations", donationRoutes);
+app.use("/api/sos", sosRoutes);
+app.use("/api/blood-banks", bloodBankRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/chat", chatRoutes);
 
-// Database Connection
+
+
 const PORT = process.env.PORT || 5000;
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log('MongoDB Connected');
-        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    })
-    .catch(err => console.error('Database connection error:', err));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
