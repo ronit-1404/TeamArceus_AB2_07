@@ -25,3 +25,4 @@ flutter:
     - lib/assets/logo.png
     - lib/data/user.json
     - lib/data/bloodReq.json
+    - lib/data/notification.json
