@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:mobile/widgets/custom_app_bar.dart';
 import 'package:mobile/widgets/donor_card.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DonorScreen extends StatefulWidget {
   const DonorScreen({super.key});
@@ -10,78 +13,98 @@ class DonorScreen extends StatefulWidget {
 }
 
 class _DonorScreenState extends State<DonorScreen> {
-  final List<Map<String, dynamic>> _donors = List.generate(
-    5,
-    (index) => {
-      'name': 'Donor ${index + 1}',
-      'bloodType': 'A+',
-      'phone': '1234567890',
-      'email': 'donor${index + 1}@example.com',
-      'age': 30 + index,
-      'sex': index % 2 == 0 ? 'Male' : 'Female',
-      'medicalHistory': 'No significant medical history',
-    },
-  );
+  List<dynamic> users = [];
+  List<dynamic> filteredUsers = [];
+  String searchQuery = '';
+  String selectedBloodType = 'All';
 
-  void _showContactModal(
-    BuildContext context,
-    String name,
-    String phone,
-    String email,
-  ) {
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    final String response = await rootBundle.loadString('lib/data/user.json');
+    final data = await json.decode(response);
+    setState(() {
+      users = data;
+      filteredUsers = data;
+    });
+  }
+
+  void _filterUsers() {
+    setState(() {
+      filteredUsers =
+          users.where((user) {
+            final matchesSearchQuery = user['name'].toLowerCase().contains(
+              searchQuery.toLowerCase(),
+            );
+            final matchesBloodType =
+                selectedBloodType == 'All' ||
+                user['bloodType'] == selectedBloodType;
+            return matchesSearchQuery && matchesBloodType;
+          }).toList();
+    });
+  }
+
+  void _showContactModal(BuildContext context, dynamic user) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (BuildContext context) {
         return Container(
+          width: double.infinity,
           padding: const EdgeInsets.all(16.0),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.deepPurple, Colors.purpleAccent],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
-                'Contact $name',
+                'Contact ${user['name']}',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
                 ),
               ),
-              const SizedBox(height: 20),
-              ListTile(
-                leading: const Icon(Icons.call, color: Colors.white),
-                title: const Text(
-                  'Call',
-                  style: TextStyle(color: Colors.white),
-                ),
+              const SizedBox(height: 10),
+              InkWell(
                 onTap: () async {
-                  final Uri launchUri = Uri(scheme: 'tel', path: phone);
-                  if (await canLaunchUrl(launchUri)) {
-                    await launchUrl(launchUri);
+                  final Uri emailUri = Uri(
+                    scheme: 'mailto',
+                    path: user['email'],
+                  );
+                  if (await canLaunch(emailUri.toString())) {
+                    await launch(emailUri.toString());
                   } else {
-                    throw 'Could not launch $launchUri';
+                    // Handle error
                   }
                 },
+                child: Text(
+                  'Email: ${user['email']}',
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
-              ListTile(
-                leading: const Icon(Icons.email, color: Colors.white),
-                title: const Text(
-                  'Email',
-                  style: TextStyle(color: Colors.white),
-                ),
+              const SizedBox(height: 5),
+              InkWell(
                 onTap: () async {
-                  final Uri launchUri = Uri(scheme: 'mailto', path: email);
-                  if (await canLaunchUrl(launchUri)) {
-                    await launchUrl(launchUri);
+                  final Uri phoneUri = Uri(scheme: 'tel', path: user['phone']);
+                  if (await canLaunch(phoneUri.toString())) {
+                    await launch(phoneUri.toString());
                   } else {
-                    throw 'Could not launch $launchUri';
+                    // Handle error
                   }
                 },
+                child: Text(
+                  'Phone: ${user['phone']}',
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
             ],
           ),
@@ -93,7 +116,13 @@ class _DonorScreenState extends State<DonorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Donor Screen'), centerTitle: true),
+      appBar: CustomAppBar(
+        title: 'Donors',
+        user: {},
+      ), // Pass the user data here
+      drawer: Drawer(
+        // Add your drawer content here
+      ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
@@ -104,66 +133,77 @@ class _DonorScreenState extends State<DonorScreen> {
           ),
         ),
         child: Column(
-          children: <Widget>[
-            const Text(
-              'Available Donors',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+          children: [
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'Search',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white,
               ),
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                  _filterUsers();
+                });
+              },
             ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _donors.length,
-                itemBuilder: (context, index) {
-                  final donor = _donors[index];
-                  return DonorCard(
-                    name: donor['name'],
-                    bloodType: donor['bloodType'],
-                    phone: donor['phone'],
-                    email: donor['email'],
-                    age: donor['age'],
-                    sex: donor['sex'],
-                    medicalHistory: donor['medicalHistory'],
-                    onContactPressed: () {
-                      _showContactModal(
-                        context,
-                        donor['name'],
-                        donor['phone'],
-                        donor['email'],
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: DropdownButton<String>(
+                value: selectedBloodType,
+                isExpanded: true,
+                underline: Container(),
+                items:
+                    <String>[
+                      'All',
+                      'A+',
+                      'A-',
+                      'B+',
+                      'B-',
+                      'AB+',
+                      'AB-',
+                      'O+',
+                      'O-',
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
                       );
-                    },
-                  );
+                    }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedBloodType = value!;
+                    _filterUsers();
+                  });
                 },
               ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () async {
-                final newDonor = await Navigator.pushNamed(
-                  context,
-                  '/add_donor',
-                );
-                if (newDonor != null) {
-                  setState(() {
-                    _donors.add(newDonor as Map<String, dynamic>);
-                  });
-                }
-              },
-              icon: const Icon(Icons.add),
-              label: const Text('Add Donor'),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 50,
-                  vertical: 15,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.deepPurple,
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                itemCount: filteredUsers.length,
+                itemBuilder: (context, index) {
+                  final user = filteredUsers[index];
+                  return DonorCard(
+                    name: user['name'],
+                    bloodType: user['bloodType'],
+                    phone: user['phone'],
+                    email: user['email'],
+                    age: 30, // Replace with actual age if available
+                    sex: 'Unknown', // Replace with actual sex if available
+                    medicalHistory:
+                        'None', // Replace with actual medical history if available
+                    onContactPressed: () => _showContactModal(context, user),
+                  );
+                },
               ),
             ),
           ],

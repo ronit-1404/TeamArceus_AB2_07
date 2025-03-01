@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key});
@@ -9,9 +11,38 @@ class RequestScreen extends StatefulWidget {
 
 class _RequestScreenState extends State<RequestScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _bloodType = '';
-  String _urgencyLevel = '';
+  List<dynamic> bloodRequests = [];
+  List<String> bloodTypes = [];
+  List<String> urgencyLevels = [];
+  String _bloodType = 'A+';
+  String _urgencyLevel = 'High';
   String _hospitalLocation = '';
+
+  @override
+  void initState() {
+    super.initState();
+    loadBloodRequests();
+  }
+
+  Future<void> loadBloodRequests() async {
+    final String response = await rootBundle.loadString(
+      'lib/data/bloodReq.json',
+    );
+    final data = await json.decode(response);
+    setState(() {
+      bloodRequests = data;
+      bloodTypes =
+          data
+              .map<String>((item) => item['bloodType'] as String)
+              .toSet()
+              .toList();
+      urgencyLevels =
+          data
+              .map<String>((item) => item['urgency'] as String)
+              .toSet()
+              .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,39 +62,59 @@ class _RequestScreenState extends State<RequestScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextFormField(
+              DropdownButtonFormField<String>(
+                value: _bloodType,
                 decoration: const InputDecoration(
                   labelText: 'Blood Type',
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
                 ),
+                items:
+                    bloodTypes.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _bloodType = newValue!;
+                  });
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the blood type';
+                    return 'Please select a blood type';
                   }
                   return null;
                 },
-                onSaved: (value) {
-                  _bloodType = value!;
-                },
               ),
               const SizedBox(height: 20),
-              TextFormField(
+              DropdownButtonFormField<String>(
+                value: _urgencyLevel,
                 decoration: const InputDecoration(
                   labelText: 'Urgency Level',
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
                 ),
+                items:
+                    urgencyLevels.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _urgencyLevel = newValue!;
+                  });
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the urgency level';
+                    return 'Please select an urgency level';
                   }
                   return null;
-                },
-                onSaved: (value) {
-                  _urgencyLevel = value!;
                 },
               ),
               const SizedBox(height: 20),

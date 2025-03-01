@@ -1,0 +1,47 @@
+[
+    {
+      "name": "City Blood Center",
+      "location": "New York, NY",
+      "contactNumber": "+1 212-555-7890",
+      "bloodStock": [
+        { "bloodType": "A+", "unitsAvailable": 15 },
+        { "bloodType": "O-", "unitsAvailable": 8 }
+      ]
+    },
+    {
+      "name": "Hope Blood Bank",
+      "location": "Los Angeles, CA",
+      "contactNumber": "+1 310-555-1234",
+      "bloodStock": [
+        { "bloodType": "B+", "unitsAvailable": 20 },
+        { "bloodType": "AB-", "unitsAvailable": 5 }
+      ]
+    },
+    {
+      "name": "Sunrise Blood Bank",
+      "location": "Chicago, IL",
+      "contactNumber": "+1 312-555-5678",
+      "bloodStock": [
+        { "bloodType": "O+", "unitsAvailable": 12 },
+        { "bloodType": "A-", "unitsAvailable": 7 }
+      ]
+    },
+    {
+      "name": "Lifeline Blood Bank",
+      "location": "Houston, TX",
+      "contactNumber": "+1 713-555-2468",
+      "bloodStock": [
+        { "bloodType": "AB+", "unitsAvailable": 10 },
+        { "bloodType": "B-", "unitsAvailable": 6 }
+      ]
+    },
+    {
+      "name": "Unity Blood Bank",
+      "location": "San Francisco, CA",
+      "contactNumber": "+1 415-555-3344",
+      "bloodStock": [
+        { "bloodType": "A+", "unitsAvailable": 18 },
+        { "bloodType": "O+", "unitsAvailable": 9 }
+      ]
+    }
+]

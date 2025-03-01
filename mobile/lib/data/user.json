@@ -1,0 +1,79 @@
+[
+    {
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "$2a$10$abcdefghijklmnopqrstuv", 
+      "phone": "123-456-7890",
+      "bloodType": "O+",
+      "address": "123 Main St, NY",
+      "isDonor": true,
+      "isActive": true,
+      "notificationToken": "token123",
+      "donationHistory": [
+        { "donationId": "65f1a8c9b4a3e5d2c8f1e4a2", "date": "2025-02-28", "location": "NY Blood Center" }
+      ],
+      "sosAlerts": ["65f3b7e9d4c2a6f5b8e1d3a2"],
+      "notifications": ["65f4c6e2d3b9a7f1e8d5c2a3"]
+    },
+    {
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "password": "$2a$10$abcdefghijklmnopqrstuv", 
+      "phone": "987-654-3210",
+      "bloodType": "A-",
+      "address": "456 Elm St, NY",
+      "isDonor": false,
+      "isActive": true,
+      "notificationToken": "token456",
+      "donationHistory": [],
+      "sosAlerts": ["65f5a2c3d9b7e8f4d6c1a2e3"],
+      "notifications": ["65f6b3e2d9c7a4f8d1c5a2e6"]
+    },
+    {
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "password": "$2a$10$abcdefghijklmnopqrstuv", 
+      "phone": "555-666-7777",
+      "bloodType": "B+",
+      "address": "789 Oak St, NY",
+      "isDonor": true,
+      "isActive": false,
+      "notificationToken": "token789",
+      "donationHistory": [
+        { "donationId": "65f7c9d3a6b4e2f5d8a1e3c2", "date": "2025-02-20", "location": "Brooklyn Blood Bank" }
+      ],
+      "sosAlerts": [],
+      "notifications": []
+    },
+    {
+      "name": "Robert Brown",
+      "email": "robert.brown@example.com",
+      "password": "$2a$10$abcdefghijklmnopqrstuv", 
+      "phone": "111-222-3333",
+      "bloodType": "AB-",
+      "address": "101 Pine St, NY",
+      "isDonor": false,
+      "isActive": true,
+      "notificationToken": "token101",
+      "donationHistory": [],
+      "sosAlerts": ["65f9a3c2d6b4e8f5d7a1e3c2"],
+      "notifications": ["65fae2b4a9c3d7f6d5a1e3c2"]
+    },
+    {
+      "name": "Emily Davis",
+      "email": "emily.davis@example.com",
+      "password": "$2a$10$abcdefghijklmnopqrstuv", 
+      "phone": "444-555-6666",
+      "bloodType": "O-",
+      "address": "222 Cedar St, NY",
+      "isDonor": true,
+      "isActive": true,
+      "notificationToken": "token222",
+      "donationHistory": [
+        { "donationId": "65f1a8c9b4a3e5d2c8f1e4a2", "date": "2025-02-10", "location": "Manhattan Blood Bank" }
+      ],
+      "sosAlerts": ["65f3b7e9d4c2a6f5b8e1d3a2"],
+      "notifications": []
+    }
+  ]
+  

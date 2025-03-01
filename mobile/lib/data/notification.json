@@ -1,0 +1,28 @@
+[
+    {
+      "userId": "65f1a8c9b4a3e5d2c8f1e4a2",
+      "message": "Your blood donation appointment is confirmed.",
+      "read": false
+    },
+    {
+      "userId": "65f2d8e1a7b3c9f4d5e6a2b3",
+      "message": "New blood request available in your area.",
+      "read": true
+    },
+    {
+      "userId": "65f3b7e9d4c2a6f5b8e1d3a2",
+      "message": "Your donation has been successfully recorded.",
+      "read": false
+    },
+    {
+      "userId": "65f4c6e2d3b9a7f1e8d5c2a3",
+      "message": "Reminder: Blood donation scheduled for tomorrow.",
+      "read": true
+    },
+    {
+      "userId": "65f5a2c3d9b7e8f4d6c1a2e3",
+      "message": "Urgent: O- blood needed at the nearby hospital.",
+      "read": false
+    }
+]
+  

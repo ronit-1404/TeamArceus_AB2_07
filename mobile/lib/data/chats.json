@@ -1,0 +1,33 @@
+[
+    {
+      "senderId": "65f1a8c9b4a3e5d2c8f1e4a2",
+      "receiverId": "65f2d8e1a7b3c9f4d5e6a2b3",
+      "message": "Hey, how are you?",
+      "timestamp": "2025-03-01T10:15:30Z"
+    },
+    {
+      "senderId": "65f2d8e1a7b3c9f4d5e6a2b3",
+      "receiverId": "65f1a8c9b4a3e5d2c8f1e4a2",
+      "message": "I'm good! How about you?",
+      "timestamp": "2025-03-01T10:16:00Z"
+    },
+    {
+      "senderId": "65f3b7e9d4c2a6f5b8e1d3a2",
+      "receiverId": "65f4c6e2d3b9a7f1e8d5c2a3",
+      "message": "Did you check the latest report?",
+      "timestamp": "2025-03-01T11:00:45Z"
+    },
+    {
+      "senderId": "65f4c6e2d3b9a7f1e8d5c2a3",
+      "receiverId": "65f3b7e9d4c2a6f5b8e1d3a2",
+      "message": "Yes, I just saw it. Looks good!",
+      "timestamp": "2025-03-01T11:02:10Z"
+    },
+    {
+      "senderId": "65f5a2c3d9b7e8f4d6c1a2e3",
+      "receiverId": "65f6b3e2d9c7a4f8d1c5a2e6",
+      "message": "Let’s meet at 3 PM to discuss further.",
+      "timestamp": "2025-03-01T12:30:00Z"
+    }
+]
+  
