@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     address: { type: String },
     isDonor: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
+    notificationToken: { type: String },
     donationHistory: [{
         donationId: { type: mongoose.Schema.Types.ObjectId, ref: "Donation" },
         date: { type: Date, default: Date.now },
