@@ -35,13 +35,7 @@ class SosScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.all(16.0),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.deepPurple, Colors.purpleAccent],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
+          decoration: const BoxDecoration(color: Colors.white),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -50,15 +44,15 @@ class SosScreen extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(height: 20),
               ListTile(
-                leading: const Icon(Icons.call, color: Colors.white),
+                leading: const Icon(Icons.call, color: Colors.black),
                 title: const Text(
                   'Call',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
                 onTap: () async {
                   final Uri launchUri = Uri(scheme: 'tel', path: phone);
@@ -70,10 +64,10 @@ class SosScreen extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.email, color: Colors.white),
+                leading: const Icon(Icons.email, color: Colors.black),
                 title: const Text(
                   'Email',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
                 onTap: () async {
                   final Uri launchUri = Uri(scheme: 'mailto', path: email);
@@ -94,23 +88,27 @@ class SosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('SOS Screen'), centerTitle: true),
+      appBar: AppBar(
+        title: const Text('SOS Screen'),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(200, 216, 64, 64),
+      ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple, Colors.purpleAccent],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Color.fromARGB(255, 235, 229, 194),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const SizedBox(height: 30),
             ElevatedButton.icon(
               onPressed: () => _sendSosAlert(context),
-              icon: const Icon(Icons.warning),
-              label: const Text('Send SOS Alert'),
+              icon: const Icon(Icons.warning, color: Colors.black),
+              label: const Text(
+                'Send SOS Alert',
+                style: TextStyle(color: Colors.black),
+              ),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 50,
@@ -119,7 +117,7 @@ class SosScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.red,
                 foregroundColor: Colors.deepPurple,
               ),
             ),
@@ -129,7 +127,7 @@ class SosScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 20),
