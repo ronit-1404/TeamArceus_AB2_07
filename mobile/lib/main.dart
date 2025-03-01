@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Blood Donation & Emergency Help',
       theme: ThemeData(primarySwatch: Colors.deepPurple),
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(user: user),
         '/login': (context) => const LoginScreen(),
