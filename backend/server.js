@@ -9,7 +9,6 @@ const donationRoutes = require("./routes/donationRoutes.js");
 const sosRoutes = require("./routes/sosRoutes.js");
 const bloodBankRoutes = require("./routes/bloodBankRoutes.js");
 const notificationRoutes = require("./routes/notificationRoutes.js");
-const reviewRoutes = require("./routes/reviewRoutes.js");
 const chatRoutes = require("./routes/chatRoutes.js");
 
 dotenv.config();
@@ -27,7 +26,6 @@ app.use("/api/donations", donationRoutes);
 app.use("/api/sos", sosRoutes);
 app.use("/api/blood-banks", bloodBankRoutes);
 app.use("/api/notifications", notificationRoutes);
-app.use("/api/reviews", reviewRoutes);
 app.use("/api/chat", chatRoutes);
 
 

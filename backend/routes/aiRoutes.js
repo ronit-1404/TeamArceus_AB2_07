@@ -15,10 +15,6 @@ router.post("/predict-urgency", (req, res) => {
     res.json({ urgencyLevel });
 });
 
-router.post("/chat", async (req, res) => {
-    const { message } = req.body;
-    const response = await chatAssistant(message);
-    res.json({ response });
-});
+
 
 module.exports = router;
