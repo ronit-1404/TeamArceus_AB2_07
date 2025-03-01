@@ -11,7 +11,6 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: 'Home', user: user),
       drawer: Drawer(
-<<<<<<< HEAD
         backgroundColor: const Color.fromARGB(255, 235, 229, 194),
         child: Column(
           children: [
@@ -64,9 +63,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-=======
-        // Add your drawer content here
->>>>>>> db79d76323998d34f7f782aba90e10d185f1d872
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
