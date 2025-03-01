@@ -11,7 +11,57 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: 'Home', user: user),
       drawer: Drawer(
-        // Add your drawer content here
+        child: Column(
+          children: [
+            const SizedBox(height: 40),
+            SizedBox(
+              height: 100, // Set the desired height
+              child: DrawerHeader(
+                decoration: BoxDecoration(color: Colors.transparent),
+                child: Text(
+                  'Navigation',
+                  style: TextStyle(color: Colors.black, fontSize: 24),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pushNamed(context, '/home');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
+              onTap: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text('About'),
+              onTap: () {
+                Navigator.pushNamed(context, '/about');
+              },
+            ),
+            Spacer(),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Log Out'),
+              onTap: () {
+                // Add your log out logic here
+              },
+            ),
+          ],
+        ),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
