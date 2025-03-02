@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AddDonorScreen extends StatefulWidget {
   const AddDonorScreen({super.key});
@@ -18,6 +20,39 @@ class _AddDonorScreenState extends State<AddDonorScreen> {
   String _medicalHistory = '';
 
   final List<String> _sexOptions = ['Male', 'Female', 'Other'];
+
+  Future<void> registerDonor() async {
+    const String apiUrl = "http://localhost:5000/api/donors/register"; 
+
+    final Map<String, dynamic> donorData = {
+      "userId": _email, 
+      "lastDonationDate": null, 
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(donorData),
+      );
+
+      final responseData = jsonDecode(response.body);
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData["message"])),
+        );
+        Navigator.pop(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: ${responseData["message"]}")),
+        );
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Server error: $error")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,13 +175,12 @@ class _AddDonorScreenState extends State<AddDonorScreen> {
                           border: OutlineInputBorder(),
                         ),
                         value: _sex,
-                        items:
-                            _sexOptions.map((String sex) {
-                              return DropdownMenuItem<String>(
-                                value: sex,
-                                child: Text(sex),
-                              );
-                            }).toList(),
+                        items: _sexOptions.map((String sex) {
+                          return DropdownMenuItem<String>(
+                            value: sex,
+                            child: Text(sex),
+                          );
+                        }).toList(),
                         onChanged: (newValue) {
                           setState(() {
                             _sex = newValue!;
@@ -190,15 +224,7 @@ class _AddDonorScreenState extends State<AddDonorScreen> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    Navigator.pop(context, {
-                      'name': _name,
-                      'bloodType': _bloodType,
-                      'email': _email,
-                      'phone': _phone,
-                      'age': _age,
-                      'sex': _sex,
-                      'medicalHistory': _medicalHistory,
-                    });
+                    registerDonor();
                   }
                 },
                 style: ElevatedButton.styleFrom(

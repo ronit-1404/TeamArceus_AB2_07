@@ -6,7 +6,7 @@ exports.registerDonor = async (req, res) => {
     try {
         const { userId, lastDonationDate } = req.body;
 
-        const user = await User.findById(userId);
+        const user = await User.findOne({ email: userId });
         if (!user) return res.status(404).json({ message: "User not found" });
 
         user.isDonor = true;
@@ -20,6 +20,7 @@ exports.registerDonor = async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
+
 
 exports.updateAvailability = async (req, res) => {
     try {
