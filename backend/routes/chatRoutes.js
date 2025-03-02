@@ -4,6 +4,6 @@ const { authMiddleware } = require("../middlewares/authMiddleware.js");
 
 const router = express.Router();
 
-router.post("/send", authMiddleware, sendMessage);
+router.post("/send", sendMessage);
 
 module.exports = router;
