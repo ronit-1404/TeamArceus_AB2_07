@@ -20,11 +20,11 @@ class SosScreen extends StatelessWidget {
   ];
 
   Future<void> _sendSosAlert(BuildContext context) async {
-    const String apiUrl = "http://your-backend-url.com/api/sos/createsos"; // Replace with your backend URL
+    const String apiUrl = "http://your-backend-url.com/api/sos/createsos"; 
     final Map<String, dynamic> sosData = {
-      "userId": "123456", // Replace with dynamic user ID
-      "emergencyType": "Medical", // Example emergency type
-      "location": "37.7749,-122.4194", // Replace with actual location
+      "userId": "123456",
+      "emergencyType": "Medical", 
+      "location": "37.7749,-122.4194", 
     };
 
     try {
