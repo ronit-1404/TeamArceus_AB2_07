@@ -11,6 +11,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: 'Home', user: user),
       drawer: Drawer(
+        backgroundColor: const Color.fromARGB(255, 235, 229, 194),
         child: Column(
           children: [
             const SizedBox(height: 40),
@@ -65,12 +66,9 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple, Colors.purpleAccent],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 235, 229, 194),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
           child: SingleChildScrollView(

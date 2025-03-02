@@ -138,6 +138,7 @@ class _DonorScreenState extends State<DonorScreen> {
         user: {},
       ), // Pass the user data here
       drawer: Drawer(
+        backgroundColor: const Color.fromARGB(255, 235, 229, 194),
         child: Column(
           children: [
             const SizedBox(height: 40),
@@ -193,11 +194,7 @@ class _DonorScreenState extends State<DonorScreen> {
       body: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple, Colors.purpleAccent],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Color.fromARGB(255, 235, 229, 194),
         ),
         child: Column(
           children: [
@@ -273,6 +270,7 @@ class _DonorScreenState extends State<DonorScreen> {
                 },
               ),
             ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

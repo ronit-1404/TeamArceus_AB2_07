@@ -47,15 +47,15 @@ class _RequestScreenState extends State<RequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Request Blood'), centerTitle: true),
+      appBar: AppBar(
+        title: const Text('Request Blood'),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(200, 216, 64, 64),
+      ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple, Colors.purpleAccent],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Color.fromARGB(255, 235, 229, 194),
         ),
         child: Form(
           key: _formKey,
