@@ -4,8 +4,8 @@ const {authMiddleware} = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.post("/register", authMiddleware, registerDonor);
-router.put("/update-availability/:id", authMiddleware, updateAvailability);
-router.get("/nearby", authMiddleware, requestBlood);
+router.post("/register", registerDonor);
+router.put("/update-availability/:id", updateAvailability);
+router.get("/nearby", requestBlood);
 router.get("/alldonors",getAllDonors);
 module.exports = router;

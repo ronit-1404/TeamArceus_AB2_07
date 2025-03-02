@@ -6,7 +6,7 @@ const {authMiddleware} = require("../middlewares/authMiddleware.js")
 
 const router = express.Router();
 
-router.get('/',authMiddleware,getRequests)
-router.delete('/:id',authMiddleware,deleteRequests);
+router.get('/',getRequests)
+router.delete('/:id',deleteRequests);
 
 module.exports = router;
