@@ -33,6 +33,29 @@ class _NotificationScreenState extends State<NotificationScreen> {
     });
   }
 
+   Future<void> fetchNotifications() async {
+    try {
+      final response = await http.get(
+        Uri.parse("http://localhost:5000/api/notifications/notification?userId=${widget.userId}"),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          notifications = data['notifications'];
+          isLoading = false;
+        });
+      } else {
+        throw Exception("Failed to load notifications");
+      }
+    } catch (error) {
+      setState(() {
+        hasError = true;
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
