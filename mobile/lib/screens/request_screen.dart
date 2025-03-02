@@ -17,7 +17,7 @@ class _RequestScreenState extends State<RequestScreen> {
   String _bloodType = 'A+';
   String _urgencyLevel = 'High';
   String _hospitalLocation = '';
-  final String apiUrl = 'http://your-backend-ip:5000';
+  final String apiUrl = 'http://localhost:5000';
 
   @override
   void initState() {

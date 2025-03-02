@@ -1,10 +1,10 @@
 const express = require("express")
-const {register,login} = require("../controllers/userController.js")
-const {createRequest} = require("../controllers/bloodRequestController.js")
+const {register,login,getallusers} = require("../controllers/userController.js")
+
 const router = express.Router();
 
 router.post("/register",register);
 router.post("/login",login)
-router.post("/request-blood",createRequest)
+router.get("/getallusers",getallusers)
 
 module.exports = router;

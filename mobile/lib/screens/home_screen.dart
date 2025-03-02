@@ -6,6 +6,22 @@ class HomeScreen extends StatelessWidget {
 
   const HomeScreen({super.key, required this.user});
 
+
+  Future<void> fetchUsers() async {
+    try {
+      final response = await http.get(Uri.parse('http://localhost:5000/api/users/getallusers'));
+      if (response.statusCode == 200) {
+        setState(() {
+          users = json.decode(response.body);
+        });
+      } else {
+        throw Exception('Failed to load users');
+      }
+    } catch (error) {
+      print('Error fetching users: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
