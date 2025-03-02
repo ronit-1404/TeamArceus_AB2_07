@@ -20,6 +20,8 @@ responders.
 
 
 # 🎯 Our Targets for the Blood Donation & Emergency Help App
+![SDG-3–Gesundheit-Wohlergehen](https://github.com/user-attachments/assets/29060f9f-8daf-45fe-bd65-3c8fcee7366c)
+
 🔴 1. Instant Blood Donation Matching
 
 ✅ Ensure real-time connection between donors and recipients using AI-driven smart matching.
@@ -53,14 +55,49 @@ responders.
 **🎯 Ultimate Goal:** A world where no one dies due to a lack of blood! 🚀
 
 # Tech Stack
-Frontend: Flutter (Dart)
+Frontend: Flutter
 
-Backend: Node.js, Express.js, MongoDB
+Backend: Node.js, Express.js
+Database : MongoDB
 
 APIs: Google Maps API, Firebase Notifications
 
 
 Authentication: JWT
+
+
+
+# Public Opinion 
+We conducted a survey to get community response for some features listed below.
+<hr>
+
+<table style="width: 100%;">
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/450ea0b8-57fa-483d-ad66-b60785ddbd0b" alt="Image 1" style="width: 100%;">
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/e3e54369-c175-4701-a1b8-0c224dde75e4" alt="Image 8" style="width: 100%;">
+    </td>
+  </tr>
+  <tr> 
+    <td style="text-align: center;">
+      <img src="https://github.com/user-attachments/assets/37c3f7bc-f2be-4206-bb46-02c8da42cbd6" alt="Image 2" style="width: 100%;">  
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/user-attachments/assets/412763c8-93e3-42c5-b4d0-438a639ef77b" alt="Image 3" style="width: 100%;">
+    </td>
+  </tr>
+  <tr>
+   <td style="text-align: center;">
+      <img src="https://github.com/user-attachments/assets/3b8b36d8-9792-46f9-8334-f9095cd11568" alt="Image 3" style="width: 100%;">
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/user-attachments/assets/8604d07f-8ad7-4b6f-a9ec-6bac72dffa79" alt="Image 3" style="width: 100%;">
+    </td>
+  </tr>
+</table>
+
 
 # User guide
 <table style="width: 100%;">
@@ -118,8 +155,5 @@ Authentication: JWT
     Shows real time updates on queries raised.
     </td>
 </tr>
-
-
-
 
 
