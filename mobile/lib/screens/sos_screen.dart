@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 class SosScreen extends StatelessWidget {
@@ -17,11 +19,35 @@ class SosScreen extends StatelessWidget {
     },
   ];
 
-  void _sendSosAlert(BuildContext context) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('SOS Alert Sent')));
-    // Add functionality to send SOS alert
+  Future<void> _sendSosAlert(BuildContext context) async {
+    const String apiUrl = "http://your-backend-url.com/api/sos/createsos"; // Replace with your backend URL
+    final Map<String, dynamic> sosData = {
+      "userId": "123456", // Replace with dynamic user ID
+      "emergencyType": "Medical", // Example emergency type
+      "location": "37.7749,-122.4194", // Replace with actual location
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(sosData),
+      );
+
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('SOS Alert Sent Successfully')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to Send SOS Alert')),
+        );
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $error')),
+      );
+    }
   }
 
   void _showContactModal(
@@ -91,7 +117,7 @@ class SosScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('SOS Screen'),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(200, 216, 64, 64),
+        backgroundColor: const Color.fromARGB(200, 216, 64, 64),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
