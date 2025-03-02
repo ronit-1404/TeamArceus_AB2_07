@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key});
@@ -17,31 +17,62 @@ class _RequestScreenState extends State<RequestScreen> {
   String _bloodType = 'A+';
   String _urgencyLevel = 'High';
   String _hospitalLocation = '';
+  final String apiUrl = 'http://your-backend-ip:5000';
 
   @override
   void initState() {
     super.initState();
-    loadBloodRequests();
+    fetchBloodRequests();
   }
 
-  Future<void> loadBloodRequests() async {
-    final String response = await rootBundle.loadString(
-      'lib/data/bloodReq.json',
-    );
-    final data = await json.decode(response);
-    setState(() {
-      bloodRequests = data;
-      bloodTypes =
-          data
-              .map<String>((item) => item['bloodType'] as String)
-              .toSet()
-              .toList();
-      urgencyLevels =
-          data
-              .map<String>((item) => item['urgency'] as String)
-              .toSet()
-              .toList();
-    });
+  Future<void> fetchBloodRequests() async {
+    try {
+      final response = await http.get(Uri.parse('$apiUrl/api/blood-requests/servicerequest'));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        setState(() {
+          bloodRequests = data;
+          bloodTypes = data.map<String>((item) => item['bloodType'] as String).toSet().toList();
+          urgencyLevels = data.map<String>((item) => item['urgency'] as String).toSet().toList();
+        });
+      } else {
+        throw Exception('Failed to load blood requests');
+      }
+    } catch (e) {
+      print('Error fetching blood requests: $e');
+    }
+  }
+
+  Future<void> submitRequest() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    _formKey.currentState!.save();
+    final Map<String, dynamic> requestData = {
+      "recipientId": "user123", // Replace with actual user ID
+      "bloodType": _bloodType,
+      "urgency": _urgencyLevel,
+      "hospital": _hospitalLocation,
+      "location": _hospitalLocation, // Assuming hospital and location are the same
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('$apiUrl/api/blood-requests/request-blood'),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(requestData),
+      );
+
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Blood request submitted successfully!')),
+        );
+      } else {
+        throw Exception('Failed to submit request');
+      }
+    } catch (e) {
+      print('Error submitting blood request: $e');
+    }
   }
 
   @override
@@ -50,7 +81,7 @@ class _RequestScreenState extends State<RequestScreen> {
       appBar: AppBar(
         title: const Text('Request Blood'),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(200, 216, 64, 64),
+        backgroundColor: const Color.fromARGB(200, 216, 64, 64),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -70,24 +101,20 @@ class _RequestScreenState extends State<RequestScreen> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
                 ),
-                items:
-                    bloodTypes.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
+                items: bloodTypes
+                    .map<DropdownMenuItem<String>>(
+                      (String value) => DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
-                      );
-                    }).toList(),
+                      ),
+                    )
+                    .toList(),
                 onChanged: (String? newValue) {
                   setState(() {
                     _bloodType = newValue!;
                   });
                 },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a blood type';
-                  }
-                  return null;
-                },
+                validator: (value) => value == null || value.isEmpty ? 'Please select a blood type' : null,
               ),
               const SizedBox(height: 20),
               DropdownButtonFormField<String>(
@@ -98,24 +125,20 @@ class _RequestScreenState extends State<RequestScreen> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
                 ),
-                items:
-                    urgencyLevels.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
+                items: urgencyLevels
+                    .map<DropdownMenuItem<String>>(
+                      (String value) => DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
-                      );
-                    }).toList(),
+                      ),
+                    )
+                    .toList(),
                 onChanged: (String? newValue) {
                   setState(() {
                     _urgencyLevel = newValue!;
                   });
                 },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select an urgency level';
-                  }
-                  return null;
-                },
+                validator: (value) => value == null || value.isEmpty ? 'Please select an urgency level' : null,
               ),
               const SizedBox(height: 20),
               TextFormField(
@@ -125,42 +148,19 @@ class _RequestScreenState extends State<RequestScreen> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the hospital location';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _hospitalLocation = value!;
-                },
+                validator: (value) => value == null || value.isEmpty ? 'Please enter the hospital location' : null,
+                onSaved: (value) => _hospitalLocation = value!,
               ),
               const SizedBox(height: 40),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // Handle the form submission
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Request Submitted')),
-                    );
-                  }
-                },
+                onPressed: submitRequest,
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 50,
-                    vertical: 15,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.deepPurple,
                 ),
-                child: const Text(
-                  'Submit Request',
-                  style: TextStyle(fontSize: 18),
-                ),
+                child: const Text('Submit Request', style: TextStyle(fontSize: 18)),
               ),
             ],
           ),
