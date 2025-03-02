@@ -21,17 +21,18 @@ class _DonorScreenState extends State<DonorScreen> {
   @override
   void initState() {
     super.initState();
-    loadUserData();
+    // loadUserData();
+    loadDonors()
   }
 
-  Future<void> loadUserData() async {
-    final String response = await rootBundle.loadString('lib/data/user.json');
-    final data = await json.decode(response);
-    setState(() {
-      users = data;
-      filteredUsers = data;
-    });
-  }
+  // Future<void> loadUserData() async {
+  //   final String response = await rootBundle.loadString('lib/data/user.json');
+  //   final data = await json.decode(response);
+  //   setState(() {
+  //     users = data;
+  //     filteredUsers = data;
+  //   });
+  // }
 
    Future<void> loadDonors() async {
     try {
@@ -40,7 +41,7 @@ class _DonorScreenState extends State<DonorScreen> {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {
           donors = data;
-          filteredDonors = data; // If you want filtering later
+          filteredDonors = data; 
         });
       } else {
         throw Exception("Failed to load donors");
@@ -138,7 +139,6 @@ class _DonorScreenState extends State<DonorScreen> {
         user: {},
       ), // Pass the user data here
       drawer: Drawer(
-        backgroundColor: const Color.fromARGB(255, 235, 229, 194),
         child: Column(
           children: [
             const SizedBox(height: 40),
@@ -194,7 +194,11 @@ class _DonorScreenState extends State<DonorScreen> {
       body: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 235, 229, 194),
+          gradient: LinearGradient(
+            colors: [Colors.deepPurple, Colors.purpleAccent],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
         child: Column(
           children: [
@@ -270,7 +274,6 @@ class _DonorScreenState extends State<DonorScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 10),
           ],
         ),
       ),
