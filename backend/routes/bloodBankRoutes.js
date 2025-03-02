@@ -5,6 +5,6 @@ const {authMiddleware} = require("../middlewares/authMiddleware.js")
 
 const router = express.Router();
 
-router.get('/allbloodbanks',authMiddleware,getBloodStock);
+router.get('/allbloodbanks',getBloodStock);
 
 module.exports = router;

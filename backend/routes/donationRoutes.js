@@ -5,7 +5,7 @@ const {authMiddleware} = require("../middlewares/authMiddleware.js")
 
 const router = express.Router();
 
-router.post("/user-donation",authMiddleware,recordDonation);
-router.post("/all-donations",authMiddleware,getDonations);
+router.post("/user-donation",recordDonation);
+router.post("/all-donations",getDonations);
 
 module.exports = router;
