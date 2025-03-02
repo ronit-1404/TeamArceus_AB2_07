@@ -1,5 +1,5 @@
 const express = require("express")
-const { registerDonor, updateAvailability, requestBlood } = require("../controllers/donorController");
+const { registerDonor, updateAvailability, requestBlood,getAllDonors } = require("../controllers/donorController");
 const {authMiddleware} = require("../middlewares/authMiddleware");
 
 const router = express.Router();
