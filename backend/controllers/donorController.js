@@ -69,3 +69,12 @@ exports.requestBlood = async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
+
+exports.getAllDonors = async (req, res) => {
+    try {
+        const donors = await User.find({ isDonor: true }); // Fetch only donors
+        res.status(200).json(donors);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};

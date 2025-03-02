@@ -7,5 +7,5 @@ const router = express.Router();
 router.post("/register", authMiddleware, registerDonor);
 router.put("/update-availability/:id", authMiddleware, updateAvailability);
 router.get("/nearby", authMiddleware, requestBlood);
-
+router.get("/alldonors",getAllDonors);
 module.exports = router;

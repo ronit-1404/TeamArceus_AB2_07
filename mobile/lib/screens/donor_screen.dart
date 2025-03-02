@@ -33,6 +33,23 @@ class _DonorScreenState extends State<DonorScreen> {
     });
   }
 
+   Future<void> loadDonors() async {
+    try {
+      final response = await http.get(Uri.parse("http://localhost:5000/api/donors/alldonors"));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        setState(() {
+          donors = data;
+          filteredDonors = data; // If you want filtering later
+        });
+      } else {
+        throw Exception("Failed to load donors");
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
   void _filterUsers() {
     setState(() {
       filteredUsers =
