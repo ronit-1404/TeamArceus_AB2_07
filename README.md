@@ -58,14 +58,22 @@ responders.
 Frontend: Flutter
 
 Backend: Node.js, Express.js
-Database : MongoDB
 
-APIs: Google Maps API, Firebase Notifications
+Database: MongoDB (via Mongoose)
 
+Authentication: JWT, bcryptjs
 
-Authentication: JWT
+Security & Config: dotenv, cors
 
+Real-Time Communication: Socket.io
 
+Geolocation: Haversine
+
+AI Features: OpenAI API
+
+Cloud Services: Firebase Admin SDK
+
+Development Tools: Nodemon
 
 # Public Opinion 
 We conducted a survey to get community response for some features listed below.
